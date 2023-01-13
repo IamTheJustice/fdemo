@@ -76,6 +76,14 @@ class _AddProjectState extends State<AddProject> {
               ),
             ),
           ),
+          TextButton(
+              onPressed: () {
+                firebase
+                    .collection("Projects")
+                    .doc()
+                    .set({'name': Project.text});
+              },
+              child: Text("Add project")),
           Expanded(
             child: StreamBuilder(
                 stream:
@@ -99,10 +107,6 @@ class _AddProjectState extends State<AddProject> {
                                 'PLATFORM': Platform.text,
                                 'DESCRIPTION': discription.text,
                               });
-                              firebase
-                                  .collection("Projects")
-                                  .doc()
-                                  .set({'name': Project.text});
 
                               setState(() {
                                 if (temparray.contains(data['uid'])) {

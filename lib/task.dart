@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
-  const Task({Key? key}) : super(key: key);
+  String var2;
+  Task({required this.var2});
 
   @override
   State<Task> createState() => _TaskState();
@@ -17,6 +18,7 @@ class _TaskState extends State<Task> {
   // final id = FirebaseAuth.instance.currentUser?.uid;
   @override
   Widget build(BuildContext context) {
+    String var2 = widget.var2;
     return Scaffold(
       appBar: AppBar(
         title: const Text('TO DO'),
@@ -25,9 +27,11 @@ class _TaskState extends State<Task> {
         children: [
           StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection("Food App")
+                  .collection("user")
                   .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .collection("Tasks")
+                  .collection("Current Project")
+                  .doc(var2)
+                  .collection("Task")
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -38,64 +42,75 @@ class _TaskState extends State<Task> {
                         var data = snapshot.data!.docs[i];
                         return Column(
                           children: [
-                            Container(
-                              color: Colors.yellow,
-                              width: double.infinity,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    data['task'],
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20),
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CupertinoAlertDialog(
-                                                title: Text(
-                                                    "Are you sure want to start task ?"),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                    child: Text("YES"),
-                                                    onPressed: () {
-                                                      firebase
-                                                          .collection(
-                                                              "Food App")
-                                                          .doc(FirebaseAuth
-                                                              .instance
-                                                              .currentUser!
-                                                              .uid)
-                                                          .collection("Process")
-                                                          .add({
-                                                        "Task": data['task']
-                                                      }).whenComplete(() => {
-                                                                snapshot
-                                                                    .data!
-                                                                    .docs[i]
-                                                                    .reference
-                                                                    .delete()
-                                                              });
-                                                      Navigator.popAndPushNamed(
-                                                          context, 'process');
-                                                    },
-                                                  ),
-                                                  CupertinoDialogAction(
-                                                    child: Text("NO"),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                  )
-                                                ],
-                                              );
-                                            });
-                                      },
-                                      child: Text("START")),
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.yellow,
+                                width: double.infinity,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    Text(
+                                      data['Task'],
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      width: 200,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return CupertinoAlertDialog(
+                                                  title: Text(
+                                                      "Are you sure want to start task ?"),
+                                                  actions: [
+                                                    CupertinoDialogAction(
+                                                      child: Text("YES"),
+                                                      onPressed: () {
+                                                        firebase
+                                                            .collection("user")
+                                                            .doc(FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid)
+                                                            .collection(
+                                                                "Current Project")
+                                                            .doc(var2)
+                                                            .collection(
+                                                                "Process")
+                                                            .add({
+                                                          "Task": data['Task']
+                                                        }).whenComplete(() => {
+                                                                  snapshot
+                                                                      .data!
+                                                                      .docs[i]
+                                                                      .reference
+                                                                      .delete()
+                                                                });
+                                                        Navigator
+                                                            .popAndPushNamed(
+                                                                context,
+                                                                'process');
+                                                      },
+                                                    ),
+                                                    CupertinoDialogAction(
+                                                      child: Text("NO"),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        child: Text("START")),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(

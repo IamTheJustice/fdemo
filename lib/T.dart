@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:f_demo/givetask.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class T extends StatefulWidget {
@@ -13,14 +15,11 @@ final firebase = FirebaseFirestore.instance;
 final currentuser = FirebaseAuth.instance;
 
 class _TState extends State<T> {
-  // late List dropDownListData;
-  // {
-  //   'title':
-  //       FirebaseFirestore.instance.collection("Projects").doc().toString(),
-  //   'value': '1'
-  // }
+  late List dropDownListData;
 
   String? dropDownValue;
+
+  var selectedUbication;
   @override
   void initState() {
     // TODO: implement initState
@@ -32,53 +31,69 @@ class _TState extends State<T> {
   Widget build(BuildContext context) {
     // print("data ${firebase.collection("Projects")}");
     return Scaffold(
+      appBar: AppBar(
+        title: Text("PROJECT LIST"),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 300,
-          ),
           Expanded(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("Projects")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  return ListView(children: [
-                    SizedBox(
-                      height: 50,
-                      child: DropdownButton(
-                          isDense: false,
-                          value: dropDownValue,
-                          isExpanded: true,
-                          menuMaxHeight: 350,
-                          items: [
-                            DropdownMenuItem(
-                              value: snapshot.data!.docs.toString(),
-                              child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, i) {
-                                    var data = snapshot.data!.docs[i];
-                                    return Text(data['name']);
-                                  }),
-                            ),
-                          ],
-                          onChanged: (newvalue) {
-                            setState(() {
-                              print('a');
-                              dropDownValue = newvalue!;
+            child: //Here is my code.
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("Projects")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.docs.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, i) {
+                              //  var name = snapshot.data!.docs[i].get('name');
+
+                              var data = snapshot.data!.docs[i];
+
+                              return Column(
+                                children: [
+                                  Container(
+                                    color: Colors.yellow,
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          data['name'],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return Givetask(
+                                                    var1: data['name']);
+                                              }));
+                                            },
+                                            child: Text("GIVE TASK"))
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                ],
+                              );
                             });
-                          }),
-                    ),
-                  ]);
-                  // return CircularProgressIndicator();
-                  if (snapshot.hasData) {
-                  } else {
-                    const CircularProgressIndicator();
-                  }
-                }),
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    }),
           )
         ],
       ),

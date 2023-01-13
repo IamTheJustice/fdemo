@@ -71,9 +71,6 @@ class _regState extends State<reg> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(

@@ -1,24 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:f_demo/currentprocess.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:f_demo/T.dart';
+import 'package:f_demo/task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Process extends StatefulWidget {
-  const Process({Key? key}) : super(key: key);
+class curruntProject extends StatefulWidget {
+  const curruntProject({Key? key}) : super(key: key);
 
   @override
-  State<Process> createState() => _ProcessState();
+  State<curruntProject> createState() => _curruntProjectState();
 }
 
-class _ProcessState extends State<Process> {
-  final currentuser = FirebaseAuth.instance;
-  final firebase = FirebaseFirestore.instance;
+class _curruntProjectState extends State<curruntProject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PROCESS PROJECT LIST'),
+        title: Text("Project List"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +68,7 @@ class _ProcessState extends State<Process> {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
                                                         builder: (context) {
-                                                  return CurrentProcess(
+                                                  return Task(
                                                       var2:
                                                           data['Project Name']);
                                                 }));

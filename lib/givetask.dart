@@ -1,27 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:f_demo/T.dart';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Add extends StatefulWidget {
-  const Add({Key? key}) : super(key: key);
+class Givetask extends StatefulWidget {
+  String var1;
+  Givetask({required this.var1});
 
   @override
-  State<Add> createState() => _AddState();
+  State<Givetask> createState() => _GivetaskState();
 }
 
-class _AddState extends State<Add> {
-  final task = TextEditingController();
-  final firebase = FirebaseFirestore.instance;
+class _GivetaskState extends State<Givetask> {
   @override
   Widget build(BuildContext context) {
+    String var1 = widget.var1;
+    final task = TextEditingController();
     return Scaffold(
+      appBar: AppBar(
+        title: Text('GIVE TASK'),
+      ),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection("user").snapshots(),
+                stream: FirebaseFirestore.instance.collection(var1).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -62,13 +65,16 @@ class _AddState extends State<Add> {
                                               ),
                                               MaterialButton(
                                                 onPressed: () async {
-                                                  firebase
+                                                  FirebaseFirestore.instance
                                                       .collection("user")
                                                       .doc(currentuser
                                                           .currentUser!.uid)
-                                                      .collection('Tasks')
+                                                      .collection(
+                                                          'Current Project')
+                                                      .doc(var1)
+                                                      .collection("Task")
                                                       .add({
-                                                    'task': task.text
+                                                    'Task': task.text
                                                   }).whenComplete(() => {
                                                             Navigator.pop(
                                                                 context),

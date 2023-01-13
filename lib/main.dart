@@ -2,7 +2,8 @@ import 'package:f_demo/Addproject.dart';
 import 'package:f_demo/Home.dart';
 import 'package:f_demo/T.dart';
 import 'package:f_demo/add.dart';
-import 'package:f_demo/addtask.dart';
+import 'package:f_demo/currentproject.dart';
+
 import 'package:f_demo/forgot.dart';
 import 'package:f_demo/invite.dart';
 import 'package:f_demo/process.dart';
@@ -18,19 +19,18 @@ Future<void> main() async {
   runApp(MaterialApp(
     theme: ThemeData(brightness: Brightness.light),
     debugShowCheckedModeBanner: false,
-    initialRoute: 'T',
+    initialRoute: 'login',
     routes: {
       'login': (context) => const login(),
       'SignUp': (context) => const reg(),
       'Home': (context) => const Home(),
       'Add': (context) => const Add(),
-      'Addtask': (context) => const Addtask(),
-      'Task': (context) => const Task(),
       'Forgot': (context) => const Forgot(),
       'process': (context) => const Process(),
       'AddProject': (context) => const AddProject(),
       'Invite': (context) => Invite(),
       'T': (context) => T(),
+      'currentproject': (context) => const curruntProject(),
     },
   ));
 }

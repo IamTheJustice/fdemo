@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
             const Divider(),
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'Task');
+                  Navigator.pushNamed(context, 'currentproject');
                 },
                 child: Text("TO DO")),
             const Divider(),
@@ -76,15 +76,15 @@ class _HomeState extends State<Home> {
             const Divider(),
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'Add');
-                },
-                child: Text("ADD TASK")),
-            const Divider(),
-            TextButton(
-                onPressed: () {
                   Navigator.pushNamed(context, 'AddProject');
                 },
                 child: Text("ADD PROJECT")),
+            Divider(),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'T');
+                },
+                child: Text("PROJECT LIST"))
           ],
         ),
       ),
