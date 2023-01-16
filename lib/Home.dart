@@ -84,7 +84,13 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   Navigator.pushNamed(context, 'T');
                 },
-                child: Text("PROJECT LIST"))
+                child: Text("PROJECT LIST")),
+            Divider(),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'dashboard');
+                },
+                child: Text("DASH BOARD"))
           ],
         ),
       ),

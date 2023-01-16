@@ -3,6 +3,7 @@ import 'package:f_demo/Home.dart';
 import 'package:f_demo/T.dart';
 import 'package:f_demo/add.dart';
 import 'package:f_demo/currentproject.dart';
+import 'package:f_demo/dashboard.dart';
 
 import 'package:f_demo/forgot.dart';
 import 'package:f_demo/invite.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
       'Invite': (context) => Invite(),
       'T': (context) => T(),
       'currentproject': (context) => const curruntProject(),
+      'dashboard': (context) => const DashBoard(),
     },
   ));
 }
