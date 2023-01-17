@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddProject extends StatefulWidget {
@@ -18,7 +17,6 @@ class _AddProjectState extends State<AddProject> {
 
   @override
   Widget build(BuildContext context) {
-    final task = TextEditingController();
     final firebase = FirebaseFirestore.instance;
     return Scaffold(
       body: Column(
@@ -83,7 +81,7 @@ class _AddProjectState extends State<AddProject> {
                     .doc()
                     .set({'name': Project.text});
               },
-              child: Text("Add project")),
+              child: const Text("Add Project")),
           Expanded(
             child: StreamBuilder(
                 stream:
@@ -94,7 +92,6 @@ class _AddProjectState extends State<AddProject> {
                         scrollDirection: Axis.vertical,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, i) {
-                          var uid = snapshot.data!.docs[i].get('uid');
                           var data = snapshot.data!.docs[i];
                           return InkWell(
                             onTap: () {

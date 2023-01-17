@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Flutter Firebase'),
+        title: const Text('Projecture'),
       ),
       body: Center(
         child: Column(

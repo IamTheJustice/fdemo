@@ -73,6 +73,16 @@ class _TaskState extends State<Task> {
                                                       child: Text("YES"),
                                                       onPressed: () {
                                                         firebase
+                                                            .collection(var2)
+                                                            .doc(var2)
+                                                            .collection(
+                                                                'Process')
+                                                            .doc()
+                                                            .set({
+                                                          'task': data['Task']
+                                                        });
+
+                                                        firebase
                                                             .collection("user")
                                                             .doc(FirebaseAuth
                                                                 .instance

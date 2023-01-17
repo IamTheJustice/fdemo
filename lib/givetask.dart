@@ -66,6 +66,11 @@ class _GivetaskState extends State<Givetask> {
                                               MaterialButton(
                                                 onPressed: () async {
                                                   FirebaseFirestore.instance
+                                                      .collection(var1)
+                                                      .doc(var1)
+                                                      .collection('task')
+                                                      .add({'task': task.text});
+                                                  FirebaseFirestore.instance
                                                       .collection("user")
                                                       .doc(currentuser
                                                           .currentUser!.uid)
