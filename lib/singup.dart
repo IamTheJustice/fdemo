@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class reg extends StatefulWidget {
-  const reg({Key? key}) : super(key: key);
+  String id;
+
+  reg({super.key, required this.id});
 
   @override
   State<reg> createState() => _regState();
@@ -20,6 +22,7 @@ class _regState extends State<reg> {
 
   @override
   Widget build(BuildContext context) {
+    String id = widget.id;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -98,6 +101,8 @@ class _regState extends State<reg> {
                               email: email.text, password: pass.text)
                           .then((value) {
                         firebase
+                            .collection(id)
+                            .doc(id)
                             .collection('user')
                             .doc(_auth.currentUser!.uid)
                             .set({
@@ -105,6 +110,7 @@ class _regState extends State<reg> {
                           'email': email.text,
                           'password': pass.text,
                           'uid': _auth.currentUser!.uid,
+                          'cuid': id,
                         });
                       });
 

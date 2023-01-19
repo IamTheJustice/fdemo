@@ -25,6 +25,8 @@ class _InviteState extends State<Invite> {
             Expanded(
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
+                      .collection(currentuser.currentUser!.uid)
+                      .doc(currentuser.currentUser!.uid)
                       .collection("user")
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection("Invite")
@@ -89,6 +91,13 @@ class _InviteState extends State<Invite> {
                                                               const Text("YES"),
                                                           onPressed: () {
                                                             firebase
+                                                                .collection(
+                                                                    currentuser
+                                                                        .currentUser!
+                                                                        .uid)
+                                                                .doc(currentuser
+                                                                    .currentUser!
+                                                                    .uid)
                                                                 .collection(
                                                                     "user")
                                                                 .doc(currentuser

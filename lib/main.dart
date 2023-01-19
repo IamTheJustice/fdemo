@@ -2,6 +2,7 @@ import 'package:f_demo/Addproject.dart';
 import 'package:f_demo/Home.dart';
 import 'package:f_demo/T.dart';
 import 'package:f_demo/add.dart';
+import 'package:f_demo/companylist.dart';
 import 'package:f_demo/currentproject.dart';
 import 'package:f_demo/dashboard.dart';
 
@@ -20,10 +21,10 @@ Future<void> main() async {
   runApp(MaterialApp(
     theme: ThemeData(brightness: Brightness.light),
     debugShowCheckedModeBanner: false,
-    initialRoute: 'login',
+    initialRoute: 'companylist',
     routes: {
+      'companylist': (context) => const company(),
       'login': (context) => const login(),
-      'SignUp': (context) => const reg(),
       'Home': (context) => const Home(),
       'Add': (context) => const Add(),
       'Forgot': (context) => const Forgot(),
