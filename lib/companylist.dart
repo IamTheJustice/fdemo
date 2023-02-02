@@ -3,6 +3,7 @@ import 'package:f_demo/login.dart';
 import 'package:f_demo/singup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class company extends StatefulWidget {
   const company({Key? key}) : super(key: key);
@@ -40,6 +41,14 @@ class _companyState extends State<company> {
                                         MaterialPageRoute(builder: (context) {
                                       return reg(id: data['uid']);
                                     }));
+                                    void setvalue() async {
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      setState(() {
+                                        var uid = (prefs.setString(
+                                            'userid', data['uid']));
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     height: 45,

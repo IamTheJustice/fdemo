@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:f_demo/currentproject.dart';
+import 'package:f_demo/invite.dart';
+import 'package:f_demo/process.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  late String id;
+  Home({required this.id});
 
   @override
   State<Home> createState() => _HomeState();
@@ -13,6 +17,7 @@ class _HomeState extends State<Home> {
   final currentuser = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    var id = widget.id;
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -58,19 +63,25 @@ class _HomeState extends State<Home> {
             const Divider(),
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'currentproject');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return curruntProject(id: id);
+                  }));
                 },
                 child: Text("TO DO")),
             const Divider(),
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'process');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Process(id: id);
+                  }));
                 },
                 child: Text("IN PROCESS")),
             const Divider(),
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'Invite');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Invite(id: id);
+                  }));
                 },
                 child: Text("INVITE")),
             const Divider(),

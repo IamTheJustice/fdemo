@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:f_demo/global.dart';
+import 'package:f_demo/model.dart';
+import 'package:f_demo/preference_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Invite extends StatefulWidget {
-  const Invite({Key? key}) : super(key: key);
+  late String id;
+  Invite({required this.id});
 
   @override
   State<Invite> createState() => _InviteState();
@@ -12,9 +17,24 @@ class Invite extends StatefulWidget {
 
 class _InviteState extends State<Invite> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var col = "";
     final currentuser = FirebaseAuth.instance;
     final firebase = FirebaseFirestore.instance;
+    void getvalue() async {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        var uid = (prefs.getString('userid'));
+      });
+    }
+
+    var id = widget.id;
 
     return Scaffold(
         appBar: AppBar(
@@ -25,8 +45,8 @@ class _InviteState extends State<Invite> {
             Expanded(
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
-                      .collection(currentuser.currentUser!.uid)
-                      .doc(currentuser.currentUser!.uid)
+                      .collection(id)
+                      .doc(id)
                       .collection("user")
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .collection("Invite")
@@ -91,13 +111,8 @@ class _InviteState extends State<Invite> {
                                                               const Text("YES"),
                                                           onPressed: () {
                                                             firebase
-                                                                .collection(
-                                                                    currentuser
-                                                                        .currentUser!
-                                                                        .uid)
-                                                                .doc(currentuser
-                                                                    .currentUser!
-                                                                    .uid)
+                                                                .collection(id)
+                                                                .doc(id)
                                                                 .collection(
                                                                     "user")
                                                                 .doc(currentuser
@@ -118,6 +133,8 @@ class _InviteState extends State<Invite> {
                                                                   "PROJECT NAME"]
                                                             });
                                                             firebase
+                                                                .collection(id)
+                                                                .doc(id)
                                                                 .collection(data[
                                                                         'PROJECT NAME']
                                                                     .toString())

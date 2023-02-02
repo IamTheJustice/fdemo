@@ -24,15 +24,10 @@ Future<void> main() async {
     initialRoute: 'companylist',
     routes: {
       'companylist': (context) => const company(),
-      'login': (context) => const login(),
-      'Home': (context) => const Home(),
       'Add': (context) => const Add(),
       'Forgot': (context) => const Forgot(),
-      'process': (context) => const Process(),
       'AddProject': (context) => const AddProject(),
-      'Invite': (context) => Invite(),
       'T': (context) => T(),
-      'currentproject': (context) => const curruntProject(),
       'dashboard': (context) => const DashBoard(),
     },
   ));

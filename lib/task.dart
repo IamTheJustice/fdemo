@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Task extends StatefulWidget {
+  String id;
   String var2;
-  Task({required this.var2});
+  Task({required this.var2, required this.id});
 
   @override
   State<Task> createState() => _TaskState();
@@ -19,6 +20,7 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     String var2 = widget.var2;
+    String id = widget.id;
     return Scaffold(
       appBar: AppBar(
         title: const Text('TO DO'),
@@ -27,6 +29,8 @@ class _TaskState extends State<Task> {
         children: [
           StreamBuilder(
               stream: FirebaseFirestore.instance
+                  .collection(id)
+                  .doc(id)
                   .collection("user")
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection("Current Project")
@@ -73,6 +77,8 @@ class _TaskState extends State<Task> {
                                                       child: Text("YES"),
                                                       onPressed: () {
                                                         firebase
+                                                            .collection(id)
+                                                            .doc(id)
                                                             .collection(var2)
                                                             .doc(var2)
                                                             .collection(
@@ -83,6 +89,8 @@ class _TaskState extends State<Task> {
                                                         });
 
                                                         firebase
+                                                            .collection(id)
+                                                            .doc(id)
                                                             .collection("user")
                                                             .doc(FirebaseAuth
                                                                 .instance

@@ -91,7 +91,7 @@ class _TState extends State<T> {
                               );
                             });
                       } else {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       }
                     }),
           )

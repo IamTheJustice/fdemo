@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:f_demo/Home.dart';
+import 'package:f_demo/T.dart';
+import 'package:f_demo/global.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+  late String id;
+  login({required this.id});
 
   @override
   State<login> createState() => _loginState();
@@ -12,17 +17,21 @@ class _loginState extends State<login> {
   late String email;
   late String password;
   final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+    String userid = widget.id;
+    late String abcd;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Login"),
+        title: const Text("Login"),
         leading: IconButton(
           onPressed: () {
             Navigator.pushNamed(context, 'first');
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: SingleChildScrollView(
@@ -78,14 +87,37 @@ class _loginState extends State<login> {
                     try {
                       final newUser = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
+
                       if (newUser != null) {
-                        Navigator.pushNamed(context, 'Home');
+                        final QuerySnapshot result = await FirebaseFirestore
+                            .instance
+                            .collection(userid)
+                            .doc(userid)
+                            .collection('user')
+                            .get();
+                        final List<DocumentSnapshot> documents = result.docs;
+
+                        for (var DOC in documents) {
+                          print(DOC.id);
+                          abcd = DOC.id;
+                        }
+
+                        if (abcd == currentuser.currentUser!.uid) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return Home(id: userid);
+                          }));
+                        } else {
+                          const snackBar = SnackBar(content: Text('error'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     } catch (e) {
                       final snackBar = SnackBar(content: Text(e.toString()));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       print(e);
                     }
+                    print(currentuser.currentUser!.uid);
                   });
                 },
                 child: Container(
@@ -122,7 +154,10 @@ class _loginState extends State<login> {
                 onPressed: () {
                   Navigator.pushNamed(context, 'SignUp');
                 },
-                child: Text("Don't have account ?"),
+                child: Text(
+                  "Don't have account ?",
+                  style: TextStyle(color: global.function),
+                ),
               ),
             ],
           ),

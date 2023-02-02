@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:f_demo/currentprocess.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 class Process extends StatefulWidget {
-  const Process({Key? key}) : super(key: key);
+  late String id;
+  Process({super.key, required this.id});
 
   @override
   State<Process> createState() => _ProcessState();
@@ -16,6 +17,7 @@ class _ProcessState extends State<Process> {
   final firebase = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
+    var id = widget.id;
     return Scaffold(
       appBar: AppBar(
         title: const Text('PROCESS PROJECT LIST'),
@@ -28,6 +30,8 @@ class _ProcessState extends State<Process> {
             child: //Here is my code.
                 StreamBuilder(
                     stream: FirebaseFirestore.instance
+                        .collection(id)
+                        .doc(id)
                         .collection("user")
                         .doc(currentuser.currentUser!.uid)
                         .collection("Current Project")
@@ -48,21 +52,17 @@ class _ProcessState extends State<Process> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      height: 50,
                                       color: Colors.yellow,
                                       width: double.infinity,
-                                      child: Row(
+                                      child: Column(
                                         children: [
-                                          SizedBox(
-                                            width: 30,
-                                          ),
                                           Text(
                                             data['Project Name'],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 160,
                                           ),
                                           TextButton(
@@ -71,11 +71,12 @@ class _ProcessState extends State<Process> {
                                                     MaterialPageRoute(
                                                         builder: (context) {
                                                   return CurrentProcess(
+                                                      id: id,
                                                       var2:
                                                           data['Project Name']);
                                                 }));
                                               },
-                                              child: Text("SHOW TASK"))
+                                              child: const Text("SHOW TASK"))
                                         ],
                                       ),
                                     ),

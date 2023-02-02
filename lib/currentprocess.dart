@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CurrentProcess extends StatefulWidget {
-  String var2;
-  CurrentProcess({required this.var2});
+  late String var2;
+  late String id;
+  CurrentProcess({required this.var2, required this.id});
 
   @override
   State<CurrentProcess> createState() => _CurrentProcessState();
@@ -15,6 +16,7 @@ class _CurrentProcessState extends State<CurrentProcess> {
   @override
   Widget build(BuildContext context) {
     String var2 = widget.var2;
+    String id = widget.id;
     return Scaffold(
       appBar: AppBar(
         title: Text("PROCESS"),
@@ -23,6 +25,8 @@ class _CurrentProcessState extends State<CurrentProcess> {
         children: [
           StreamBuilder(
               stream: FirebaseFirestore.instance
+                  .collection(id)
+                  .doc(id)
                   .collection("user")
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection("Current Project")

@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class curruntProject extends StatefulWidget {
-  const curruntProject({Key? key}) : super(key: key);
+  late String id;
+  curruntProject({required this.id});
 
   @override
   State<curruntProject> createState() => _curruntProjectState();
@@ -14,6 +15,7 @@ class curruntProject extends StatefulWidget {
 class _curruntProjectState extends State<curruntProject> {
   @override
   Widget build(BuildContext context) {
+    var id = widget.id;
     return Scaffold(
       appBar: AppBar(
         title: Text("Project List"),
@@ -26,6 +28,8 @@ class _curruntProjectState extends State<curruntProject> {
             child: //Here is my code.
                 StreamBuilder(
                     stream: FirebaseFirestore.instance
+                        .collection(id)
+                        .doc(id)
                         .collection("user")
                         .doc(currentuser.currentUser!.uid)
                         .collection("Current Project")
@@ -46,10 +50,9 @@ class _curruntProjectState extends State<curruntProject> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      height: 50,
                                       color: Colors.yellow,
                                       width: double.infinity,
-                                      child: Row(
+                                      child: Column(
                                         children: [
                                           SizedBox(
                                             width: 30,
@@ -60,15 +63,13 @@ class _curruntProjectState extends State<curruntProject> {
                                                 color: Colors.black,
                                                 fontSize: 20),
                                           ),
-                                          SizedBox(
-                                            width: 160,
-                                          ),
                                           TextButton(
                                               onPressed: () {
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
                                                         builder: (context) {
                                                   return Task(
+                                                      id: id,
                                                       var2:
                                                           data['Project Name']);
                                                 }));
